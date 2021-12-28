@@ -9,11 +9,11 @@ import Foundation
 
 class TaskModel {
     static func getAllTasks(completionHandler: @escaping(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
-        let url = URL(string: "http://localhost:8080/tasks")
+        if let url = URL(string: "http://localhost:8080/tasks"){
         let session = URLSession.shared
-        let task = session.dataTask(with: url!, completionHandler: completionHandler)
+        let task = session.dataTask(with: url, completionHandler: completionHandler)
         task.resume()
-    }
+        }}
     
     static func addTask(objective: String, completionHandler: @escaping(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
             if let urlToReq = URL(string: "http://localhost:8080/tasks") {
@@ -30,7 +30,8 @@ class TaskModel {
     }
     
     static func updateTask(id: String,objective: String, completionHandler: @escaping(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
-                var request = URLRequest(url: URL(string: "http://127.0.0.1:8080/tasks/\(id)")!)
+        if let urlToReq = URL(string: "http://127.0.0.1:8080/tasks/\(id)"){
+                var request = URLRequest(url: urlToReq)
                     request.httpMethod = "PUT"
         
                     let bodyData = "objective=\(objective)"
@@ -39,9 +40,10 @@ class TaskModel {
                     let session = URLSession.shared
                     let task = session.dataTask(with: request as URLRequest, completionHandler: completionHandler)
                     task.resume()
-            }
+        }}
             static func deleteTask(id: String, completionHandler: @escaping(_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void) {
-                var request = URLRequest(url: URL(string: "http://127.0.0.1:8080/tasks/\(id)")!)
+                if let urlToReq = URL(string: "http://127.0.0.1:8080/tasks/\(id)"){
+                var request = URLRequest(url: urlToReq)
                     request.httpMethod = "DELETE"
                 
                     let bodyData = "id=\(id)"
@@ -49,5 +51,5 @@ class TaskModel {
                     let session = URLSession.shared
                     let task = session.dataTask(with: request as URLRequest, completionHandler: completionHandler)
                     task.resume()
-            }
+                }}
 }

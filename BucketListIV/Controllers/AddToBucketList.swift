@@ -32,12 +32,12 @@ class AddToBucketList: UIViewController {
     
     
     @IBAction func saveButtonClicked(_ sender: UIBarButtonItem) {
-        if taskToEdit != nil {
-            taskToEdit?.setValue(textField.text ,forKey: "objective")
-                TaskModel.updateTask(id: taskToEdit!.value(forKey: "id") as! String , objective: textField.text! , completionHandler:{ data, response, error in
-                    if data != nil {
+        if let taskToEdit = taskToEdit, let objactiveString = textField.text{
+            taskToEdit.setValue(textField.text ,forKey: "objective")
+                TaskModel.updateTask(id: taskToEdit.value(forKey: "id") as! String , objective:  objactiveString, completionHandler:{ data, response, error in
+                    if let data = data {
                         do{
-                            let task = try JSONSerialization.jsonObject(with: data!, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
+                            let task = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
                             
                             DispatchQueue.main.async {
                                 self.delegate?.itemsList[self.indexPath!.row] = task

@@ -11,26 +11,7 @@ class BucketList: UITableViewController{
     
     var itemsList: [NSDictionary] = []
     var indexPath: IndexPath?
-    
-    
-    struct taskCharacter {
-        let createdAt: String
-        var objective: String
-        
-        
-        
-        init?(dict: [String: Any]){
-            guard let objective = dict["objective"] as? String,
-                  let createdAt = dict["createdAt"] as? String else {
-                      return nil
-                  }
-            
-            self.createdAt = createdAt
-            self.objective = objective
-            
-            
-        }
-    }
+
     
     override func viewDidLoad() {
         TaskModel.getAllTasks() {
